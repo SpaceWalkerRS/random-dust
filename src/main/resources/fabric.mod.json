@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "random-dust",
+	"version": "${version}",
+	"name": "Random Dust",
+	"description": "Randomize the block update order of redstone dust.",
+	"authors": [
+		"Space Walker"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/random-dust",
+		"sources": "https://github.com/SpaceWalkerRS/random-dust",
+		"issues": "https://github.com/SpaceWalkerRS/random-dust/issues"
+	},
+	"license": "MIT License",
+	"environment": "*",
+	"entrypoints": {
+	},
+	"mixins": [
+		"random-dust.mixins.json"
+	],
+	"depends": {
+		"minecraft": "1.19.x"
+	},
+	"custom": {
+		"loom:injected_interfaces": {
+			"net/minecraft/class_1937": [
+				"random/dust/access/ILevel"
+			]
+		},
+		"modmenu": {
+			"links": {
+				"modmenu.discord": "https://discord.gg/EJC9zkX"
+			}
+		}
+	}
+}

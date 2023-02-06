@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "random.dust.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"CommandsMixin",
+		"LevelMixin",
+		"MinecraftServerMixin",
+		"RedStoneWireBlockMixin",
+		"ServerLevelMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
