@@ -29,8 +29,8 @@ public class RedStoneWireBlockMixin {
 	@Inject(
 		method = "updatePowerStrength",
 		cancellable = true,
-		remap = false,
 		at = @At(
+			remap = false,
 			value = "INVOKE",
 			target = "Lcom/google/common/collect/Sets;newHashSet()Ljava/util/HashSet;"
 		)
