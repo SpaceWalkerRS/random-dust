@@ -8,7 +8,6 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.Level;
 
 public class RandomizeRedstoneDustCommand {
 
@@ -31,17 +30,15 @@ public class RandomizeRedstoneDustCommand {
 	}
 
 	private static int query(CommandSourceStack source) {
-		Component message;
-
-		if (RandomDustMod.interval < 0) {
-			message = Component.literal("randomized redstone dust is disabled");
-		} else if (RandomDustMod.interval == 0) {
-			message = Component.literal("redstone dust update order randomizes for each individual wire");
-		} else {
-			message = Component.literal("redstone dust update order randomizes every " + RandomDustMod.interval + " ticks");
-		}
-
-		source.sendSuccess(message, false);
+		source.sendSuccess(() -> {
+			if (RandomDustMod.interval < 0) {
+				return Component.literal("randomized redstone dust is disabled");
+			} else if (RandomDustMod.interval == 0) {
+				return Component.literal("redstone dust update order randomizes for each individual wire");
+			} else {
+				return Component.literal("redstone dust update order randomizes every " + RandomDustMod.interval + " ticks");
+			}
+		}, false);
 
 		return Command.SINGLE_SUCCESS;
 	}
@@ -49,17 +46,15 @@ public class RandomizeRedstoneDustCommand {
 	private static int set(CommandSourceStack source, int interval) {
 		RandomDustMod.setInterval(interval);
 
-		Component message;
-
-		if (interval < 0) {
-			message = Component.literal("disabled randomized redstone dust");
-		} else if (interval == 0) {
-			message = Component.literal("redstone dust update order will randomize for each individual wire");
-		} else {
-			message = Component.literal("redstone dust update order will randomize every " + interval + " ticks");
-		}
-
-		source.sendSuccess(message, true);
+		source.sendSuccess(() -> {
+			if (interval < 0) {
+				return Component.literal("disabled randomized redstone dust");
+			} else if (interval == 0) {
+				return Component.literal("redstone dust update order will randomize for each individual wire");
+			} else {
+				return Component.literal("redstone dust update order will randomize every " + interval + " ticks");
+			}
+		}, true);
 
 		return Command.SINGLE_SUCCESS;
 	}
@@ -82,13 +77,14 @@ public class RandomizeRedstoneDustCommand {
 
 		RandomDustMod.paused = paused;
 
-		if (paused) {
-			Level level = source.getLevel();
-			source.sendSuccess(Component.literal("paused redstone dust randomizing at offset ").
-				append(Component.literal(level.randomDust$getOffset().toShortString())), true);
-		} else {
-			source.sendSuccess(Component.literal("resumed redstone dust randomizing"), true);
-		}
+		source.sendSuccess(() -> {
+			if (paused) {
+				return Component.literal("paused redstone dust randomizing at offset ").
+					append(Component.literal(source.getLevel().randomDust$getOffset().toShortString()));
+			} else {
+				return Component.literal("resumed redstone dust randomizing");
+			}
+		}, true);
 
 		return Command.SINGLE_SUCCESS;
 	}

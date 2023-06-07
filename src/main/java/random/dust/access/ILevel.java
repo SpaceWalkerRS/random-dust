@@ -4,6 +4,6 @@ import net.minecraft.core.BlockPos;
 
 public interface ILevel {
 
-	BlockPos randomDust$getOffset();
+	default BlockPos randomDust$getOffset() { throw new UnsupportedOperationException(); }
 
 }
