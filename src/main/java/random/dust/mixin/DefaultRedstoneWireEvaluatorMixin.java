@@ -17,14 +17,21 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.redstone.DefaultRedstoneWireEvaluator;
+import net.minecraft.world.level.redstone.Orientation;
+import net.minecraft.world.level.redstone.RedstoneWireEvaluator;
 
 import random.dust.NotifierPos;
 import random.dust.RandomDustMod;
 
-@Mixin(RedStoneWireBlock.class)
-public class RedStoneWireBlockMixin {
+@Mixin(DefaultRedstoneWireEvaluator.class)
+public abstract class DefaultRedstoneWireEvaluatorMixin extends RedstoneWireEvaluator  {
 
 	private static final Direction[] DIRECTIONS = Direction.values();
+
+	private DefaultRedstoneWireEvaluatorMixin(RedStoneWireBlock wireBlock) {
+		super(wireBlock);
+	}
 
 	@Inject(
 		method = "updatePowerStrength",
@@ -35,7 +42,7 @@ public class RedStoneWireBlockMixin {
 			target = "Lcom/google/common/collect/Sets;newHashSet()Ljava/util/HashSet;"
 		)
 	)
-	private void randomDust$updateNeighbors(Level level, BlockPos pos, BlockState state, CallbackInfo ci) {
+	private void randomDust$updateNeighbors(Level level, BlockPos pos, BlockState state, Orientation orientation, boolean added, CallbackInfo ci) {
 		if (RandomDustMod.interval >= 0) {
 			if (RandomDustMod.interval == 0) {
 				updateNeighborsRandomly(level, pos);
@@ -58,7 +65,7 @@ public class RedStoneWireBlockMixin {
 		Collections.shuffle(notifiers);
 
 		for (int i = 0; i < notifiers.size(); i++) {
-			level.updateNeighborsAt(notifiers.get(i), (Block)(Object)this);
+			level.updateNeighborsAt(notifiers.get(i), wireBlock);
 		}
 	}
 
@@ -72,7 +79,7 @@ public class RedStoneWireBlockMixin {
 		}
 
 		for (NotifierPos notifier : notifiers) {
-			level.updateNeighborsAt(notifier.pos, (Block)(Object)this);
+			level.updateNeighborsAt(notifier.pos, wireBlock);
 		}
 	}
 }
