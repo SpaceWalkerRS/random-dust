@@ -4,9 +4,6 @@ plugins {
 	
 }
 
-sourceCompatibility = JavaVersion.VERSION_21
-targetCompatibility = JavaVersion.VERSION_21
-
 base {
 	archivesName = "${project.archives_base_name}-mc${project.minecraft_version}"
 }
@@ -36,6 +33,9 @@ tasks.withType(JavaCompile).configureEach {
 
 java {
 	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {
