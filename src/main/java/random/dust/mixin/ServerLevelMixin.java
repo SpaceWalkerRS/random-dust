@@ -6,13 +6,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.dimension.DimensionType;
-import net.minecraft.world.level.storage.WritableLevelData;
 
 import random.dust.RandomDustMod;
 import random.dust.access.ILevel;
@@ -20,8 +15,8 @@ import random.dust.access.ILevel;
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelMixin extends Level implements ILevel {
 
-	private ServerLevelMixin(WritableLevelData data, ResourceKey<Level> key, RegistryAccess registryAccess, Holder<DimensionType> dimensiom, boolean isClientSide, boolean isDebug, long seed, int maxChainedNeighborUpdates) {
-		super(data, key, registryAccess, dimensiom, isClientSide, isDebug, seed, maxChainedNeighborUpdates);
+	private ServerLevelMixin() {
+		super(null, null, null, null, false, false, 0L, 0);
 	}
 
 	private int ticks = 0;

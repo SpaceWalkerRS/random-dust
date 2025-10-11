@@ -14,8 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.redstone.DefaultRedstoneWireEvaluator;
 import net.minecraft.world.level.redstone.Orientation;
@@ -29,8 +27,8 @@ public abstract class DefaultRedstoneWireEvaluatorMixin extends RedstoneWireEval
 
 	private static final Direction[] DIRECTIONS = Direction.values();
 
-	private DefaultRedstoneWireEvaluatorMixin(RedStoneWireBlock wireBlock) {
-		super(wireBlock);
+	private DefaultRedstoneWireEvaluatorMixin() {
+		super(null);
 	}
 
 	@Inject(
