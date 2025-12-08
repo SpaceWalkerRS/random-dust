@@ -8,13 +8,14 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.permissions.Permissions;
 
 public class RandomizeRedstoneDustCommand {
 
 	public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
 		LiteralArgumentBuilder<CommandSourceStack> builder = Commands.
 			literal("randomizeredstonedust").
-			requires(source -> source.hasPermission(2)).
+			requires(source -> source.permissions().hasPermission(Permissions.COMMANDS_MODERATOR)).
 			executes(context -> query(context.getSource())).
 			then(Commands.
 				argument("interval", IntegerArgumentType.integer(-1, Integer.MAX_VALUE)).
